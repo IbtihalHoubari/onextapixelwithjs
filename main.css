@@ -156,6 +156,20 @@ label {
     margin-bottom: 5px;
     color: #333;
 }
+.error-border {
+    border: 2px solid red;
+}
+
+.valid-border {
+    border: 2px solid green;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+}
 .footer{
     background-color: #32325d;
     color: #fff;

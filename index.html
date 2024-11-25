@@ -50,15 +50,18 @@
 
 
     </div>
+
     <div class="new-blog-form">
         <form id="new-blog-form">
             <label for="title">Title:</label>
             <input type="text" id="title" name="title" required>
+            <span id="title-error" class="error-message"></span>
             <br>
             <label for="description">Description:</label>
             <textarea id="description" name="description" required></textarea>
+            <span id="description-error" class="error-message"></span>
             <br>
-            <button type="submit">Add Blog</button>
+            <button type="submit" id="submit-btn">Add Blog</button>
         </form>
     </div>
 
