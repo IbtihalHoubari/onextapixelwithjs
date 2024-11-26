@@ -10,7 +10,7 @@ const BASE_URL = 'http://localhost:4000/blogs';
 
 const fetchBlogs = async () => {
     try {
-        const response = await fetch(BASE_URL);
+        const response = await fetch(BASE_URL, { method: 'GET', });
         if (!response.ok) throw new Error('Failed to fetch blogs');
         const blogs = await response.json();
         displayBlogs(blogs);
@@ -37,13 +37,7 @@ const displayBlogs = (blogs) => {
 
 const addBlog = async (blog) => {
     try {
-        const response = await fetch(BASE_URL);
-        if (!response.ok) throw new Error('Failed to fetch blogs');
-
-        const blogs = await response.json();
-        const newId = (blogs.reduce((max, blog) => Math.max(max, Number(blog.id)), 0) + 1).toString();
-
-
+        const newId = Math.floor(Math.random() * 1000).toString(); 
         const newBlog = { id: newId, ...blog };
         await fetch(BASE_URL, {
             method: 'POST',
@@ -93,6 +87,9 @@ const validateDescription = (description) => {
     } else if (!descriptionRegex.test(description)) {
         descriptionError.textContent = 'Description must contain only English letters and spaces.';
         return false;
+    } else if (description.trim() === '') {
+        descriptionError.textContent = 'Description cannot be empty.';
+        return false;
     }
     descriptionError.textContent = '';
     return true;
@@ -103,11 +100,9 @@ titleInput.addEventListener('input', () => {
     if (isValidTitle) {
         titleInput.classList.add('valid-border');
         titleInput.classList.remove('error-border');
-        descriptionInput.disabled = false; 
     } else {
         titleInput.classList.add('error-border');
         titleInput.classList.remove('valid-border');
-        descriptionInput.disabled = true; 
     }
     checkFormValidity();
 });
@@ -128,6 +123,13 @@ const checkFormValidity = () => {
     const isValidForm =
         validateTitle(titleInput.value.trim()) && validateDescription(descriptionInput.value.trim());
     submitButton.disabled = !isValidForm;
+    if (isValidForm) {
+        submitButton.classList.add('enabled-submit');
+        submitButton.classList.remove('disabled-submit');
+    } else {
+        submitButton.classList.add('disabled-submit');
+        submitButton.classList.remove('enabled-submit');
+    }
 };
 
 newBlogForm.addEventListener('submit', (e) => {
